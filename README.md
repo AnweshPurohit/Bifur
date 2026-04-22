@@ -2,8 +2,6 @@
 
 Bifur is a high-performance **GPGPU particle simulation** that visualizes the beautiful, complex patterns of **Thomas' Cyclically Symmetric Attractor**. By combining chaos theory with modern web technologies, it creates an interactive, cosmic visualizer that reacts to your presence.
 
-![Bifur Preview](https://via.placeholder.com/1200x600?text=Bifur+Cosmic+Simulation)
-
 ---
 
 ## 🌌 Mathematical Foundation
