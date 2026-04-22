@@ -1,58 +1,70 @@
-# Bifur - Interactive Cosmic Particle System
+# ✨ Bifur: Thomas' Cyclical Chaos
 
-Bifur is a high-performance GPGPU particle simulation that combines chaos mathematics with advanced web technologies to create a stunning, interactive cosmic visualizer.
+Bifur is a high-performance **GPGPU particle simulation** that visualizes the beautiful, complex patterns of **Thomas' Cyclically Symmetric Attractor**. By combining chaos theory with modern web technologies, it creates an interactive, cosmic visualizer that reacts to your presence.
 
-![Bifur Preview](https://via.placeholder.com/800x450.png?text=Bifur+Particle+System) *(Replace with actual screenshot if available)*
+![Bifur Preview](https://via.placeholder.com/1200x600?text=Bifur+Cosmic+Simulation)
 
-## 🚀 Overview
+---
 
-The project simulates over **262,144 particles** (512x512) in real-time using WebGL shaders. The movement of these particles is driven by chaotic equations, specifically utilizing a bifur parameter to create intricate, organic patterns that resemble nebulae and cosmic structures.
+## 🌌 Mathematical Foundation
 
-### Key Features
-- **GPGPU Simulation**: Particle positions and physics are calculated entirely on the GPU for maximum performance.
-- **Hand Gesture Control**: Integrated with **MediaPipe Hands** to allow touchless interaction.
-- **Cosmic Aesthetics**: Additive blending, trail effects, and dynamic gradients create a premium visual experience.
-- **Real-time Tweaking**: Use the built-in Tweakpane to adjust chaos parameters, speed, and visuals on the fly.
+The soul of this animation is **Thomas' Cyclically Symmetric Attractor**, a 3D chaotic system introduced by the biologist René Thomas. It is celebrated for its cyclic symmetry and its ability to produce intricate, labyrinthine paths.
 
-## 🖐️ Gesture Controls
+### The System of Equations
 
-If you have a webcam, you can control the particles directly with your hands:
+The movement of each of the **262,144 particles** is governed by the following system of non-linear differential equations:
 
-| Action | Hand | Gesture |
-| :--- | :--- | :--- |
-| **Zoom** | Right Hand | Pinch (Index to Thumb) distance controls scale. |
-| **Rotation** | Left Hand | Rotating your hand rotates the particle system. |
-| **Tentacle Spread** | Left Hand | Pinch (Index to Thumb) controls the spread/chaos intensity. |
+$$
+\begin{aligned}
+\frac{dx}{dt} &= \sin(y) - b \cdot x \\
+\frac{dy}{dt} &= \sin(z) - b \cdot y \\
+\frac{dz}{dt} &= \sin(x) - b \cdot z
+\end{aligned}
+$$
 
-*Note: You can toggle "Hand Control" in the UI panel.*
+### Key Parameters
+- **$b$ (Dissipation Coefficient)**: This parameter controls how quickly the system converges toward the attractor. 
+  - A lower value ($b \approx 0.2$) leads to high-entropy, chaotic behavior where particles explode into "tentacles."
+  - A higher value ($b > 0.3$) pulls particles into tighter, more stable orbits.
+- **Integration**: To ensure stability and precision, we use the **4th Order Runge-Kutta (RK4)** integration method. This allows for smooth motion even at higher simulation speeds.
 
-## 💻 Tech Stack
-- **Three.js**: 3D rendering and scene management.
-- **MediaPipe**: Real-time hand tracking and gesture recognition.
-- **GLSL Shaders**: Custom simulation and rendering shaders.
-- **Tweakpane**: Sleek UI for parameter control.
+---
 
-## 🛠️ How to Run
+## 🖐️ Interactive Gestures
 
-Since the project uses ES Modules and requires webcam access, it **must be served via a web server**. Running it by simply opening the `index.html` file in your browser will not work.
+Experience touchless control using **MediaPipe Hands**. Bifur maps your physical movements to the mathematical parameters of the universe:
 
-### Using Python (Simplest)
-If you have Python installed, run this command in the `Bifur` folder:
-```bash
-python -m http.server 8000
-```
-Then visit `http://localhost:8000` in your browser.
+| Action | Hand | Mechanism | Effect |
+| :--- | :--- | :--- | :--- |
+| **Zoom** | Right Hand | Index-Thumb Pinch | Scaler mapping to the scene's camera distance. |
+| **Rotation** | Left Hand | Hand Rotation | Direct Z-axis rotation of the particle system. |
+| **Cosmic Spread**| Left Hand | Index-Thumb Pinch | Modulates the $b$ parameter and radial force. |
 
-### Using Node.js (npx)
-If you have Node.js installed, run:
+> [!TIP]
+> Use the **"Cosmic Reset"** button in the UI if the system becomes too chaotic or the particles drift too far.
+
+---
+
+## Technical Architecture
+
+Bifur is built for extreme performance, offloading nearly all computation to the hardware:
+
+- **GPGPU Simulation**: Particle positions are stored in floating-point textures and updated via GLSL fragment shaders (Ping-Pong rendering).
+- **Three.js Core**: Manages the WebGL context, camera, and geometric primitives.
+- **MediaPipe**: Drives the hands-free gesture engine.
+- **Tweakpane**: Provides a sleek, glassmorphic UI for real-time parameter tuning.
+
+## Getting Started
+
+Since this project uses ES Modules and Webcam API, it must be served via **HTTPS** or **localhost**.
+
+### Fast Start
+If you have **Node.js**:
 ```bash
 npx serve .
 ```
-Then follow the link provided in the terminal.
 
-### Using VS Code
-1. Install the **Live Server** extension.
-2. Right-click `index.html` and select **"Open with Live Server"**.
-
----
-*Created with ❤️ by Antigravity*
+If you have **Python**:
+```bash
+python -m http.server 8000
+```
